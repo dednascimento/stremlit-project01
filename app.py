@@ -9,6 +9,7 @@ st.title('Dashboard de Vendas :shopping_trolley:')
 
 # SIDEBAR FILTRO
 st.sidebar.title('Filtro')
+
 with st.sidebar.expander('Categoria do Produto'):
     filtro_categoria = st.multiselect(
         'Categorias',
@@ -21,6 +22,7 @@ with st.sidebar.expander('Categoria do Produto'):
 with st.sidebar.expander('Faixa de Preço'):
     precoMax = int(df['Preço'].max())
     precoMin = int(df['Preço'].min())
+
     filtro_preco = st.slider(
         'Preço',
         precoMin, precoMax,
@@ -32,7 +34,7 @@ with st.sidebar.expander('Data'):
         'Selecione a data',
         (df['Data da Compra'].min(),
             df['Data da Compra'].max()),
-        help='Selecione a data das compras que deseja.',
+        help='Selecione a data das compras que deseja.'
     )
 
 with st.sidebar.expander('Vendedores'):
