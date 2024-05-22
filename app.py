@@ -16,7 +16,7 @@ with st.sidebar.expander('Categoria do Produto'):
         df['Categoria do Produto'].unique(),
         df['Categoria do Produto'].unique(),
         help='Você pode selecionar um ou mais das categorias para análisar.',
-        placeholder='Escolha uma categoria.'
+        placeholder='Escolha uma categoria'
     )
 
 with st.sidebar.expander('Faixa de Preço'):
