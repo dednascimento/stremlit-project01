@@ -2,7 +2,6 @@ import streamlit as st
 from dataset import df
 from utils import *
 
-
 # SIDEBAR
 st.sidebar.title('Filtro')
 

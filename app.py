@@ -8,56 +8,61 @@ st.set_page_config(layout='wide')
 st.title('Dashboard de Vendas :shopping_trolley:')
 
 # SIDEBAR FILTRO
-st.sidebar.title('Filtros')
-filtro_vendedor = st.sidebar.multiselect(
-    'Vendedores',
-    df['Vendedor'].unique(),
-    help='Você pode selecionar um ou mais dos vendedores para análisar.',
-    placeholder='Escolha um(a) vendedor(a).'
-)
+st.sidebar.title('Filtro')
+with st.sidebar.expander('Categoria do Produto'):
+    filtro_categoria = st.multiselect(
+        'Categorias',
+        df['Categoria do Produto'].unique(),
+        df['Categoria do Produto'].unique(),
+        help='Você pode selecionar um ou mais das categorias para análisar.',
+        placeholder='Escolha uma categoria.'
+    )
 
-filtro_categoria = st.sidebar.multiselect(
-    'Categorias',
-    df['Categoria do Produto'].unique(),
-    help='Você pode selecionar um ou mais das categorias para análisar.',
-    placeholder='Escolha uma categoria.'
-)
+with st.sidebar.expander('Faixa de Preço'):
+    precoMax = int(df['Preço'].max())
+    precoMin = int(df['Preço'].min())
+    filtro_preco = st.slider(
+        'Preço',
+        precoMin, precoMax,
+        (precoMin, precoMax)
+    )
 
-filtro_produto = st.sidebar.multiselect(
-    'Produtos',
-    df['Produto'].unique(),
-    help='Você pode selecionar um ou mais dos produtos para análisar.',
-    placeholder = 'Escolha um produto.'
-)
+with st.sidebar.expander('Data'):
+    filtro_data = st.date_input(
+        'Selecione a data',
+        (df['Data da Compra'].min(),
+            df['Data da Compra'].max()),
+        help='Selecione a data das compras que deseja.',
+    )
 
-# VENDEDOR
-if filtro_vendedor and (not filtro_vendedor and not filtro_categoria):
-    df = df[df['Vendedor'].isin(filtro_vendedor)]
+with st.sidebar.expander('Vendedores'):
+    filtro_vendedor = st.multiselect(
+        'Vendedores',
+        df['Vendedor'].unique(),
+        df['Vendedor'].unique(),
+        help='Você pode selecionar um ou mais dos vendedores para análisar.',
+        placeholder='Escolha um(a) vendedor(a).'
+    )
 
-elif filtro_vendedor and (filtro_produto and not filtro_categoria):
-    df = df[(df['Vendedor'].isin(filtro_vendedor))]
-    df = df[df['Produto'].isin(filtro_produto)]
+with st.sidebar.expander('Localidade'):
+    filtro_local = st.multiselect(
+        'Local da Compra',
+        df['Local da compra'].unique(),
+        df['Local da compra'].unique(),
+        help='Você pode selecionar um ou mais regiões.',
+        placeholder='Escolha um(a) vendedor(a).'
+    )
 
-# PRODUTO
-elif filtro_produto and (not filtro_vendedor and not filtro_categoria):
-    df = df[df['Produto'].isin(filtro_produto)]
+# QUERY DE FILTRO:
+query = '''
+    `Categoria do Produto` in @filtro_categoria and \
+    `Vendedor` in @filtro_vendedor and \
+    `Local da compra` in @filtro_local and \
+    @filtro_preco[0] <= Preço <= @filtro_preco[1] and \
+    @filtro_data[0] <= `Data da Compra` <= @filtro_data[1]
+'''
 
-# CATEGORIA
-elif filtro_categoria and (not filtro_vendedor and not filtro_produto):
-    df = df[df['Categoria do Produto'].isin(filtro_categoria)]
-
-elif filtro_categoria and (filtro_vendedor and filtro_produto):
-    df = df[(df['Vendedor'].isin(filtro_vendedor))]
-    df = df[df['Produto'].isin(filtro_produto)]
-    df = df[df['Categoria do Produto'].isin(filtro_categoria)]
-
-elif filtro_categoria and filtro_vendedor:
-    df = df[(df['Vendedor'].isin(filtro_vendedor))]
-    df = df[df['Categoria do Produto'].isin(filtro_categoria)]
-
-elif filtro_categoria and filtro_produto:
-    df = df[df['Categoria do Produto'].isin(filtro_categoria)]
-    df = df[df['Produto'].isin(filtro_produto)]
+df = df.query(query)
 
 # ABAS DASHBORD
 aba1, aba2, aba3 = st.tabs(['Dataset', 'Receita', 'Vendedores'])
