@@ -48,7 +48,6 @@ def_rec_categoria = df.groupby(
 df_vendedores = pd.DataFrame(df.groupby('Vendedor')['Preço'].agg(['sum', 'count']))
 
 
-@st.cache_data
 def convert_csv(df):
     return df.to_csv(index=False).encode('utf-8')
 
