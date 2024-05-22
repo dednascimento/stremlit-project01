@@ -15,8 +15,7 @@ with st.sidebar.expander('Categoria do Produto'):
         label='Categorias',
         options=df['Categoria do Produto'].unique(),
         default=df['Categoria do Produto'].unique(),
-        help='Você pode selecionar um ou mais das categorias para análisar.',
-        placeholder='Selecione uma categoria'
+        help='Você pode selecionar um ou mais das categorias para análisar.'
     )
 
 with st.sidebar.expander('Faixa de Preço'):
@@ -42,8 +41,7 @@ with st.sidebar.expander('Vendedores'):
         'Vendedores',
         df['Vendedor'].unique(),
         df['Vendedor'].unique(),
-        help='Você pode selecionar um ou mais dos vendedores para análisar.',
-        #placeholder='Escolha um(a) vendedor(a).'
+        help='Você pode selecionar um ou mais dos vendedores para análisar.'
     )
 
 with st.sidebar.expander('Localidade'):
@@ -51,8 +49,7 @@ with st.sidebar.expander('Localidade'):
         'Local da Compra',
         df['Local da compra'].unique(),
         df['Local da compra'].unique(),
-        help='Você pode selecionar um ou mais regiões.',
-        #placeholder='Escolha um(a) vendedor(a).'
+        help='Você pode selecionar um ou mais regiões.'
     )
 
 # QUERY DE FILTRO:
