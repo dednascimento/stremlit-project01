@@ -12,9 +12,9 @@ st.sidebar.title('Filtro')
 
 with st.sidebar.expander('Categoria do Produto'):
     filtro_categoria = st.multiselect(
-        'Categorias',
-        df['Categoria do Produto'].unique(),
-        df['Categoria do Produto'].unique(),
+        label='Categorias',
+        options=df['Categoria do Produto'].unique(),
+        default=df['Categoria do Produto'].unique(),
         help='Você pode selecionar um ou mais das categorias para análisar.',
         placeholder='Selecione uma categoria'
     )
@@ -39,18 +39,18 @@ with st.sidebar.expander('Data'):
 
 with st.sidebar.expander('Vendedores'):
     filtro_vendedor = st.multiselect(
-        'Vendedores',
-        df['Vendedor'].unique(),
-        df['Vendedor'].unique(),
+        label='Vendedores',
+        options=df['Vendedor'].unique(),
+        default=df['Vendedor'].unique(),
         help='Você pode selecionar um ou mais dos vendedores para análisar.',
         placeholder='Escolha um(a) vendedor(a).'
     )
 
 with st.sidebar.expander('Localidade'):
     filtro_local = st.multiselect(
-        'Local da Compra',
-        df['Local da compra'].unique(),
-        df['Local da compra'].unique(),
+        label='Local da Compra',
+        options=df['Local da compra'].unique(),
+        default=df['Local da compra'].unique(),
         help='Você pode selecionar um ou mais regiões.',
         placeholder='Escolha um(a) vendedor(a).'
     )
